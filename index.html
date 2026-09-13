@@ -95,6 +95,18 @@ body {
 <script src="/sdk.js"></script>
 <script src="https://unpkg.com/@vkontakte/vk-bridge@2.14.2/dist/browser.min.js"></script>
 <script>document.title = "Defense Io";</script>
+<script>
+// Yandex Games требования, п. 1.6 — контекстное меню браузера отключено
+// в игровой области (правый клик / долгий тап). Слушатель на document, а
+// не на #canvas напрямую — canvas создаётся позже самим движком, а
+// head_include выполняется до него; делегирование по e.target работает
+// независимо от момента создания canvas.
+document.addEventListener('contextmenu', function (e) {
+    if (e.target && e.target.id === 'canvas') {
+        e.preventDefault();
+    }
+});
+</script>
 	</head>
 	<body>
 		<canvas id="canvas">
